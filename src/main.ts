@@ -1,0 +1,42 @@
+import { NestFactory, Reflector } from '@nestjs/core';
+import { AppModule } from './app.module';
+import {
+  Logger,
+  ValidationPipe,
+  ClassSerializerInterceptor,
+} from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  const logger = new Logger('Bootstrap');
+  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+
+  // Swagger yapılandırması
+  const config = new DocumentBuilder()
+    .setTitle('NestJS API')
+    .setDescription('NestJS API documentation')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+
+  // Swagger UI özelleştirmesi
+  SwaggerModule.setup('api', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true, // Token'ı localStorage'da sakla
+    },
+  });
+
+  await app.listen(3000);
+  logger.log('╔════════════════════════════════════════╗');
+  logger.log('║           UYGULAMA DURUMU              ║');
+  logger.log('╠════════════════════════════════════════╣');
+  logger.log(`║ 🚀 Port: 3000                          ║`);
+  logger.log(`║ 🌐 URL: http://localhost:3000          ║`);
+  logger.log(`║ 📚 Swagger: http://localhost:3000/api  ║`);
+  logger.log('╚════════════════════════════════════════╝');
+}
+bootstrap();
