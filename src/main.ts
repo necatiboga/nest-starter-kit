@@ -6,12 +6,18 @@ import {
   ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const logger = new Logger('Bootstrap');
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+  app.useGlobalInterceptors(
+    new ClassSerializerInterceptor(app.get(Reflector)),
+    new TransformInterceptor(),
+  );
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   // Swagger yapılandırması
   const config = new DocumentBuilder()
