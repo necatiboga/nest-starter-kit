@@ -12,6 +12,7 @@ import {
 import { Public } from './decorators/public.decorator';
 import { User, UserRole } from '../users/entities/user.entity';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -51,5 +52,14 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async refreshToken(@Req() req: Request & { user: User }) {
     return this.authService.refreshToken(req.user);
+  }
+
+  @Post('logout')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Logout' })
+  @ApiResponse({ status: 200, description: 'Logout successful' })
+  async logout(@Req() req: Request & { user: User }) {
+    return this.authService.logout(req.user);
   }
 }

@@ -71,4 +71,8 @@ export class AuthService {
       expires_in: this.configService.get('JWT_EXPIRES_IN'),
     };
   }
+
+  async logout(user: User) {
+    await this.usersService.updateRefreshToken(user.id, null);
+  }
 }
