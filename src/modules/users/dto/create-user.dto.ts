@@ -7,7 +7,7 @@ import {
   IsNotEmpty,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { UserRole } from '../entities/user.entity';
+import { UserRole } from '@users/entities/user.entity';
 
 export class CreateUserDto {
   @ApiProperty({ example: 'johndoe' })

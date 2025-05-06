@@ -1,18 +1,18 @@
 import { Controller, Post, Body, UseGuards, Req } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { LoginDto } from './dto/login.dto';
-import { CreateUserDto } from '../users/dto/create-user.dto';
-import { UsersService } from '../users/users.service';
+import { AuthService } from '@auth/auth.service';
+import { LoginDto } from '@auth/dto/login.dto';
+import { CreateUserDto } from '@users/dto/create-user.dto';
+import { UsersService } from '@users/users.service';
 import {
   ApiTags,
   ApiOperation,
   ApiResponse,
   ApiBearerAuth,
 } from '@nestjs/swagger';
-import { Public } from './decorators/public.decorator';
-import { User, UserRole } from '../users/entities/user.entity';
-import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { Public } from '@auth/decorators/public.decorator';
+import { User, UserRole } from '@users/entities/user.entity';
+import { JwtRefreshGuard } from '@guards/jwt-refresh.guard';
+import { JwtAuthGuard } from '@guards/jwt-auth.guard';
 
 @ApiTags('auth')
 @Controller('auth')
