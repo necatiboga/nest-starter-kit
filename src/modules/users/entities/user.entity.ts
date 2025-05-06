@@ -17,7 +17,7 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   username: string;
 
   @Exclude()
@@ -33,6 +33,10 @@ export class User {
     default: UserRole.USER,
   })
   role: UserRole;
+
+  @Exclude()
+  @Column({ nullable: true })
+  refreshToken: string;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

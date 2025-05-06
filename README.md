@@ -45,6 +45,17 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## env file
+``` bash
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USER=necati
+DATABASE_PASSWORD=123
+DATABASE_NAME=nest-db
+JWT_SECRET=123necati
+JWT_EXPIRES_IN=1h
+```
+
 ## Run tests
 
 ```bash

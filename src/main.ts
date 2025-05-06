@@ -25,6 +25,17 @@ async function bootstrap() {
     .setDescription('NestJS API documentation')
     .setVersion('1.0')
     .addBearerAuth()
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'Authorization',
+        description: 'Refresh Token',
+        in: 'header',
+      },
+      'refresh-token',
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

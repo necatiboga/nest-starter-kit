@@ -1,11 +1,17 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { UsersService } from '../users/users.service';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { Public } from './decorators/public.decorator';
-import { UserRole } from '../users/entities/user.entity';
+import { User, UserRole } from '../users/entities/user.entity';
+import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -35,5 +41,15 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
+  }
+
+  @Post('refresh-token')
+  @UseGuards(JwtRefreshGuard)
+  @ApiBearerAuth('refresh-token')
+  @ApiOperation({ summary: 'Refresh token' })
+  @ApiResponse({ status: 200, description: 'Token refreshed' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  async refreshToken(@Req() req: Request & { user: User }) {
+    return this.authService.refreshToken(req.user);
   }
 }
