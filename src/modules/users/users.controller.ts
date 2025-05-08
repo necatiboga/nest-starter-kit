@@ -17,6 +17,7 @@ import { RolesGuard } from '@guards/roles.guard';
 import { Roles } from '@auth/decorators/roles.decorator';
 import { UserRole } from '@users/entities/user.entity';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 
 @ApiTags('users')
 @ApiBearerAuth()
@@ -43,6 +44,12 @@ export class UsersController {
   @ApiOperation({ summary: 'Get own profile' })
   getProfile(@Request() req) {
     return this.usersService.findOne(req.user.id);
+  }
+
+  @Patch('update-profile')
+  @ApiOperation({ summary: 'Update own profile' })
+  updateProfile(@Request() req, @Body() updateProfileDto: UpdateProfileDto) {
+    return this.usersService.updateOwnProfile(req.user.id, updateProfileDto);
   }
 
   @Get(':id')

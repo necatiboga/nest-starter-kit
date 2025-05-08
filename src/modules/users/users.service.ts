@@ -5,6 +5,7 @@ import { User } from '@users/entities/user.entity';
 import { CreateUserDto } from '@users/dto/create-user.dto';
 import { UpdateUserDto } from '@users/dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 
 @Injectable()
 export class UsersService {
@@ -67,5 +68,9 @@ export class UsersService {
 
   async updateRefreshToken(userId: number, refreshToken: string) {
     await this.usersRepository.update(userId, { refreshToken });
+  }
+
+  async updateOwnProfile(userId: number, updateProfileDto: UpdateProfileDto) {
+    return this.usersRepository.update(userId, updateProfileDto);
   }
 }
