@@ -70,7 +70,6 @@ This project is a NestJS-based starter kit that provides a solid foundation for 
 | **Authentication** | JWT, Passport |
 | **Validation** | Class-validator, Class-transformer |
 | **Documentation** | Swagger/OpenAPI |
-| **Testing** | Jest, Supertest |
 | **Code Quality** | ESLint, Prettier |
 
 ## 🚀 Installation
