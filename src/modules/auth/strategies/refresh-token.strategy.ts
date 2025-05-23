@@ -16,9 +16,7 @@ export class RefreshTokenStrategy extends PassportStrategy(
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (req: Request) => {
-          console.log('Refresh Token Strategy req.headers', req.headers);
           const authHeader = req.headers['authorization'];
-          console.log('Refresh Token Strategy authHeader', authHeader);
           if (!authHeader || !authHeader.startsWith('Bearer ')) return null;
           return authHeader.split(' ')[1];
         },

@@ -12,6 +12,12 @@ import { HttpExceptionFilter } from '@common/filters/http-exception.filter';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const logger = new Logger('Bootstrap');
+  app.setGlobalPrefix('api');
+  app.enableCors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+  });
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(
     new ClassSerializerInterceptor(app.get(Reflector)),
@@ -41,19 +47,19 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
 
   // Swagger UI özelleştirmesi
-  SwaggerModule.setup('api', app, document, {
+  SwaggerModule.setup('swagger', app, document, {
     swaggerOptions: {
       persistAuthorization: true, // Token'ı localStorage'da sakla
     },
   });
 
   await app.listen(3000);
-  logger.log('╔════════════════════════════════════════╗');
-  logger.log('║           UYGULAMA DURUMU              ║');
-  logger.log('╠════════════════════════════════════════╣');
-  logger.log(`║ 🚀 Port: 3000                          ║`);
-  logger.log(`║ 🌐 URL: http://localhost:3000          ║`);
-  logger.log(`║ 📚 Swagger: http://localhost:3000/api  ║`);
-  logger.log('╚════════════════════════════════════════╝');
+  logger.log('╔════════════════════════════════════════════╗');
+  logger.log('║           UYGULAMA DURUMU                  ║');
+  logger.log('╠════════════════════════════════════════════╣');
+  logger.log(`║ 🚀 Port: 3000                              ║`);
+  logger.log(`║ 🌐 URL: http://localhost:3000/api          ║`);
+  logger.log(`║ 📚 Swagger: http://localhost:3000/swagger  ║`);
+  logger.log('╚════════════════════════════════════════════╝');
 }
 bootstrap();

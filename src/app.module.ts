@@ -12,8 +12,8 @@ import configuration from '@config/configuration';
       load: [configuration],
     }),
     DatabaseModule,
-    UsersModule,
     AuthModule,
+    UsersModule,
   ],
 })
 export class AppModule {}

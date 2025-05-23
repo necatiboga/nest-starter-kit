@@ -26,6 +26,10 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Features
+- Nest.JS + PostgreSQL DB Connection + TypeORM + Swagger UI 
+- Auth Guard (JWT + Refresh Token) + Roles Guard + Common Response Structure  
+
 ## Project setup
 
 ```bash
@@ -54,6 +58,8 @@ DATABASE_PASSWORD=123
 DATABASE_NAME=nest-db
 JWT_SECRET=123necati
 JWT_EXPIRES_IN=1h
+JWT_REFRESH_SECRET=necati1234
+JWT_REFRESH_EXPIRES_IN=30d
 ```
 
 ## Run tests
